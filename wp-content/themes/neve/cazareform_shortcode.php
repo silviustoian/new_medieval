@@ -1,4 +1,5 @@
 <?php
+add_shortcode("cazareform_shortcode", "cazareform_shortcode");
 function cazareform_shortcode()
 {
 
@@ -187,5 +188,5 @@ function cazareform_shortcode()
 <?php
     return ob_get_clean();
 }
-add_shortcode("cazareform_shortcode", "cazareform_shortcode");
+
 ?>
