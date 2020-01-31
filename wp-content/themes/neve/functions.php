@@ -89,42 +89,10 @@ require_once 'globals/migrations.php';
 require_once get_template_directory() . '/header-footer-grid/loader.php';
 
 ///send ajax to DB
-add_action('wp_ajax_nopriv_add_new_user', 'add_new_user');
-add_action('wp_ajax_add_new_user', 'add_new_user');
-function add_new_user()
-{
-	global $wpdb;
-
-	$titlu = sanitize_text_field($_POST["titlu"]);
-	$first_name = sanitize_text_field($_POST["first_name"]);
-	$last_name = sanitize_text_field($_POST["last_name"]);
-	$tel = sanitize_text_field($_POST["tel"]);
-	$description = sanitize_text_field($_POST["description"]);
 
 
-	$tableName = 'cazare_entry';
-	$insert_row = $wpdb->insert(
-		$tableName,
-		array(
-			'titlu' => $titlu,
-			'first_name' => $first_name,
-			'last_name' => $last_name,
-			'tel' => $tel,
-			'description' => $description
-
-		)
-	);
-	// if row inserted in table
-	if ($insert_row) {
-		echo json_encode(array('res' => true, 'message' => __('New row has been inserted.')));
-	} else {
-		echo json_encode(array('res' => false, 'message' => __('Something went wrong. Please try again later.')));
-	}
-	wp_die();
-}
 
 
-include(get_stylesheet_directory() . './cazareform_shortcode.php');
 
 
 ////send form to custom post type
