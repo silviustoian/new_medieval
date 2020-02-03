@@ -94,7 +94,6 @@ require_once get_template_directory() . '/header-footer-grid/loader.php';
 
 
 
-
 ////send form to custom post type
 if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) &&  $_POST['action'] == "new_post") {
 

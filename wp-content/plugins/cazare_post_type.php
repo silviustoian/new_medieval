@@ -156,10 +156,47 @@ function cazareform_shortcode()
             </ul>
         </form>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    
+
+    <?php
+    return ob_get_clean();
+}
+add_action('wp_ajax_nopriv_add_new_user', 'add_new_user');
+add_action('wp_ajax_add_new_user', 'add_new_user');
+function add_new_user()
+{
+	global $wpdb;
+
+	$titlu = sanitize_text_field($_POST["titlu"]);
+	$first_name = sanitize_text_field($_POST["first_name"]);
+	$last_name = sanitize_text_field($_POST["last_name"]);
+	$tel = sanitize_text_field($_POST["tel"]);
+	$description = sanitize_text_field($_POST["description"]);
+
+
+	$tableName = 'cazare_entry';
+	$insert_row = $wpdb->insert(
+		$tableName,
+		array(
+			'titlu' => $titlu,
+			'first_name' => $first_name,
+			'last_name' => $last_name,
+			'tel' => $tel,
+			'description' => $description
+
+		)
+	);
+	// if row inserted in table
+	if ($insert_row) {
+		echo json_encode(array('res' => true, 'message' => __('New row has been inserted.')));
+	} else {
+		echo json_encode(array('res' => false, 'message' => __('Something went wrong. Please try again later.')));
+	}
+	wp_die();
+}
+?>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-
-
     <script>
         jQuery(function() {
             jQuery('#myForm').submit(function(event) {
@@ -296,46 +333,4 @@ function cazareform_shortcode()
             color: red;
         }
     </style>
-
-
-
-
-
-<?php
-    return ob_get_clean();
-}
-add_action('wp_ajax_nopriv_add_new_user', 'add_new_user');
-add_action('wp_ajax_add_new_user', 'add_new_user');
-function add_new_user()
-{
-	global $wpdb;
-
-	$titlu = sanitize_text_field($_POST["titlu"]);
-	$first_name = sanitize_text_field($_POST["first_name"]);
-	$last_name = sanitize_text_field($_POST["last_name"]);
-	$tel = sanitize_text_field($_POST["tel"]);
-	$description = sanitize_text_field($_POST["description"]);
-
-
-	$tableName = 'cazare_entry';
-	$insert_row = $wpdb->insert(
-		$tableName,
-		array(
-			'titlu' => $titlu,
-			'first_name' => $first_name,
-			'last_name' => $last_name,
-			'tel' => $tel,
-			'description' => $description
-
-		)
-	);
-	// if row inserted in table
-	if ($insert_row) {
-		echo json_encode(array('res' => true, 'message' => __('New row has been inserted.')));
-	} else {
-		echo json_encode(array('res' => false, 'message' => __('Something went wrong. Please try again later.')));
-	}
-	wp_die();
-}
-?>
-
+    
